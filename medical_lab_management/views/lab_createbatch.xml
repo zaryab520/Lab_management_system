@@ -1,0 +1,76 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="createbatch_tree">
+      <field name="name">createbatch tree</field>
+      <field name="model">lab.createbatch</field>
+      <field name="arch" type="xml">
+        <tree>  
+                <field name="batch_name"/>
+                <field name="collected_sample"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="createbatch_form">
+      <field name="name">createbatch form</field>
+      <field name="model">lab.createbatch</field>
+      <field name="arch" type="xml">
+        <form string="Registration Form">  
+            <header>
+
+            <button  name="confirm_batch" states="draft"  string="Confirm" class="oe_highlight" type="object"/>
+            <button  name="dispatch_batch" states="confirm"   string="Dispatch" class="oe_highlight" type="object"/>
+            <button  name="receive_batch" states="dispatch"   string="Received" class="oe_highlight" type="object" groups="medical_lab_management.group_lab_technician"/>
+            <field name="state" widget="statusbar" statusbar_visible="draft,confirm,dispatch" statusbar_colors='{"Completed":"blue","Test In Progress":"red","Invoiced":"grey"}'/>
+
+            </header>
+            <sheet>
+              <group>
+                <field name="batch_name"/>
+                <field name="collected_sample"/>
+                
+              </group>
+
+                            
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+
+
+  
+
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="createbatch_action_window">
+      <field name="name">createbatch window</field>
+      <field name="res_model">lab.createbatch</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+
+    <!-- Top menu item -->
+
+    <!-- menu categories -->
+
+   <menuitem id="lab_batch_wizard" name="Create Batch" sequence="20"
+        parent="menu_root_lab" action="createbatch_action_window"
+        groups="group_lab_management_user,group_lab_management_technician"/>
+
+
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="test_module.menu_1_list" parent="test_module.menu_1"
+              action="test_module.action_window"/>
+    <menuitem name="Server to list" id="test_module" parent="test_module.menu_2"
+              action="test_module.action_server"/>
+-->
+  </data>
+</odoo>
